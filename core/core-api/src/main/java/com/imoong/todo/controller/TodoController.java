@@ -43,7 +43,7 @@ public class TodoController {
     @PatchMapping("/todos/{todoId}")
     public ApiResponse<Void> modify(ApiUser apiUser, @PathVariable Long todoId,
         @RequestBody ModifyTodoRequest request) {
-        todoService.modifyTodo(apiUser.toUser(), request.toModifyTodo(todoId));
+        todoService.modifyTodo(apiUser.toUser(), todoId, request.toModifyTodo());
         return ApiResponse.success();
     }
 

@@ -1,5 +1,5 @@
 package com.imoong.todo.domain;
 
-public record ModifyTodo(Long todoId, String content, TodoStatus status) {
+public record ModifyTodo(String content, TodoStatus status) {
 
 }

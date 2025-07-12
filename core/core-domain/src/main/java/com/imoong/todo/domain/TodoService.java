@@ -29,8 +29,8 @@ public class TodoService {
         return todoReader.readTodos(user);
     }
 
-    public void modifyTodo(User user, ModifyTodo modifyTodo) {
-        todoModifier.modifyTodo(user, modifyTodo);
+    public void modifyTodo(User user, Long todoId, ModifyTodo modifyTodo) {
+        todoModifier.modifyTodo(user, todoId, modifyTodo);
     }
 
     public void deleteTodo(User user, Long todoId) {

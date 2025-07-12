@@ -5,8 +5,8 @@ import com.imoong.todo.domain.TodoStatus;
 
 public record ModifyTodoRequest(String content, TodoStatus status) {
 
-    public ModifyTodo toModifyTodo(Long todoId) {
-        return new ModifyTodo(todoId, content, status);
+    public ModifyTodo toModifyTodo() {
+        return new ModifyTodo(content, status);
     }
 
 }

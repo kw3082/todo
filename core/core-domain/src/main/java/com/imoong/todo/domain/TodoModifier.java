@@ -19,9 +19,9 @@ public class TodoModifier {
     }
 
     @Transactional
-    public void modifyTodo(User user, ModifyTodo modifyTodo) {
-        todoValidator.validateOwner(user.id(), modifyTodo.todoId());
-        Todo todo = todoReader.readTodo(modifyTodo.todoId());
+    public void modifyTodo(User user, Long todoId, ModifyTodo modifyTodo) {
+        todoValidator.validateOwner(user.id(), todoId);
+        Todo todo = todoReader.readTodo(todoId);
         todo.modify(modifyTodo.content(), modifyTodo.status());
         todoRepository.modify(todo);
     }
