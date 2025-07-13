@@ -1,5 +1,7 @@
 package com.imoong.todo.domain;
 
+ import com.imoong.todo.error.CoreErrorType;
+import com.imoong.todo.error.CoreException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,9 +22,11 @@ public class TodoModifier {
 
     @Transactional
     public void modifyTodo(User user, Long todoId, ModifyTodo modifyTodo) {
-        todoValidator.validateOwner(user.id(), todoId);
         Todo todo = todoReader.readTodo(todoId);
-        todo.modify(modifyTodo.content(), modifyTodo.status());
+        if (todo.isOwner(user.id())) {
+            throw new CoreException(CoreErrorType.NOT_FOUND_DATA);
+        }
+        todo.modify(modifyTodo.content(), modifyTodo.status(), modifyTodo.priority());
         todoRepository.modify(todo);
     }
 }

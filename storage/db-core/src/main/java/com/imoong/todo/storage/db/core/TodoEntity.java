@@ -1,5 +1,6 @@
 package com.imoong.todo.storage.db.core;
 
+import com.imoong.todo.domain.Priority;
 import com.imoong.todo.domain.Todo;
 import com.imoong.todo.domain.TodoStatus;
 import com.imoong.todo.support.DefaultDateTime;
@@ -18,10 +19,14 @@ public class TodoEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private TodoStatus status;
 
-    public TodoEntity(Long userId, String content, TodoStatus status) {
+    @Enumerated(EnumType.STRING)
+    private Priority priority;
+
+    public TodoEntity(Long userId, String content, TodoStatus status, Priority priority) {
         this.userId = userId;
         this.content = content;
         this.status = status;
+        this.priority = priority;
     }
 
 
@@ -34,12 +39,14 @@ public class TodoEntity extends BaseEntity {
             this.userId,
             new DefaultDateTime(this.getCreatedAt(), this.getUpdatedAt()),
             this.status,
-            this.content);
+            this.content,
+            this.priority);
     }
 
-    public void modify(String content, TodoStatus status) {
+    public void modify(String content, TodoStatus status, Priority priority) {
         this.content = content;
         this.status = status;
+        this.priority = priority;
     }
 
 

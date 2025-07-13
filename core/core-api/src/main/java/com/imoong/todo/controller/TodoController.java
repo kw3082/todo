@@ -1,6 +1,5 @@
 package com.imoong.todo.controller;
 
-import com.imoong.todo.domain.NewTodo;
 import com.imoong.todo.domain.Todo;
 import com.imoong.todo.domain.TodoService;
 import com.imoong.todo.domain.User;
@@ -18,18 +17,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TodoController {
 
-    public final TodoService todoService;
+    private final TodoService todoService;
 
     public TodoController(TodoService todoService) {
         this.todoService = todoService;
     }
-
     @PostMapping("/todos")
     public ApiResponse<DefaultIdResponse> append(
         ApiUser apiUser, @RequestBody AppendTodoRequest request) {
-        NewTodo newTodo = request.toNewTodo();
-        User user = apiUser.toUser();
-        Long id = todoService.appendTodo(user, newTodo);
+        Long id = todoService.appendTodo(apiUser.toUser(), request.toNewTodo());
         return ApiResponse.success(new DefaultIdResponse(id));
     }
 

@@ -3,7 +3,6 @@ package com.imoong.todo.storage.db.core;
 import com.imoong.todo.domain.NewTodo;
 import com.imoong.todo.domain.Todo;
 import com.imoong.todo.domain.TodoRepository;
-import com.imoong.todo.domain.TodoStatus;
 import com.imoong.todo.domain.User;
 import com.imoong.todo.error.CoreErrorType;
 import com.imoong.todo.error.CoreException;
@@ -30,7 +29,7 @@ public class TodoCoreRepository implements TodoRepository {
         TodoEntity todoEntity = todoJpaRepository.findById(todo.getId()).orElseThrow(
             () -> new CoreException(CoreErrorType.NOT_FOUND_DATA, todo.getId())
         );
-        todoEntity.modify(todo.getContent(), todo.getStatus());
+        todoEntity.modify(todo.getContent(), todo.getStatus(), todo.getPriority());
     }
 
     @Override
@@ -44,7 +43,7 @@ public class TodoCoreRepository implements TodoRepository {
     @Override
     public Todo save(User user, NewTodo newTodo) {
         return todoJpaRepository.save(
-            new TodoEntity(user.id(), newTodo.content(), TodoStatus.PENDING)).toTodo();
+            new TodoEntity(user.id(), newTodo.content(), newTodo.status(), newTodo.priority())).toTodo();
     }
 
     @Override
